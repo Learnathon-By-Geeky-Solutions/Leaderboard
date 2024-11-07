@@ -82,6 +82,7 @@ $(document).ready(async () => {
     const table = new DataTable('#score-table',{
         responsive:true,
         data:data,
+        bLengthChange: false,
         columns:[
             {data:'rank',title:'Rank',className: 'dt-center'},
             {data:'name',title:'Name',className: 'dt-center'},
@@ -91,7 +92,7 @@ $(document).ready(async () => {
                 title: 'Details',
                 orderable: false,
                 className: 'dt-center-details',
-                render: () => '<button class="show-details-btn btn">Show Details</button>'
+                render: () => '<button class="show-details-btn btn btn-primary">Show Details</button>'
             }
         ]
     })
@@ -104,37 +105,52 @@ $(document).ready(async () => {
             // Close the row details
             row.child.hide();
             tr.removeClass('shown');
+            $(this).removeClass('btn-light');
+            $(this).addClass('btn-primary')
             $(this).text('Show Details');
         } else {
             // Create details HTML with hidden score details
             const rowData = row.data();
             const detailsHtml = `
-                <div>
-                    <div class="details" style="float: right;">
-                        <p><i class="icon-coverage"></i><strong>Code Coverage:</strong> ${rowData.scoreDetails.coverageScore}/20</p>
-                        <p><i class="icon-bugs"></i><strong>Bugs:</strong> ${rowData.scoreDetails.bugsScore}/15</p>
-                        <p><i class="icon-vulnerabilities"></i><strong>Vulnerabilities:</strong> ${rowData.scoreDetails.vulnerabilitiesScore}/15</p>
-                        <p><i class="icon-code-smells"></i><strong>Code Smells:</strong> ${rowData.scoreDetails.codeSmellsScore}/20</p>
-                        <p><i class="icon-technical-debt"></i><strong>Technical Debt:</strong> ${rowData.scoreDetails.technicalDebtScore}/20</p>
-                        <p><i class="icon-complexity"></i><strong>Complexity Score:</strong> ${rowData.scoreDetails.complexityScore}/10</p>
+                <div class='deatils-parent'>
+                    <hr/>
+                    <div class="details">
+                        <p><i class="icon-coverage"></i>Code Coverage:<strong>${rowData.scoreDetails.coverageScore}/20</strong></p>
+                        <p><i class="icon-bugs"></i>Bugs:<strong>${rowData.scoreDetails.bugsScore}/15</strong></p>
+                        <p><i class="icon-vulnerabilities"></i>Vulnerabilities:<strong>${rowData.scoreDetails.vulnerabilitiesScore}/15</strong></p>
+                        <p><i class="icon-code-smells"></i>Code Smells:<strong>${rowData.scoreDetails.codeSmellsScore}/20</strong></p>
+                        <p><i class="icon-technical-debt"></i>Technical Debt:<strong>${rowData.scoreDetails.technicalDebtScore}/20</strong></p>
+                        <p><i class="icon-complexity"></i>Complexity Score:<strong>${rowData.scoreDetails.complexityScore}/10</strong></p>
                     </div>
+                    <hr/>
                 </div>
             `;
             row.child(detailsHtml).show();
             tr.addClass('shown');
+            $(this).removeClass('btn-primary')
+            $(this).addClass('btn-light')
             $(this).text('Hide Details');
         }
     });
 
     // Leaderboard cards
-    $('#first-score').text(leaderboardData?.[0]?.scoreDetails?.totalScore ?? '')
-    $('#first-team').text(leaderboardData?.[0]?.name ?? '')
+    let score = leaderboardData?.[0]?.scoreDetails?.totalScore;
+    let result = score ? `${score} pts` : '';
+    $('#first-score').text(result)
+    let team = leaderboardData?.[0]?.name;
+    $('#first-team').text(team)
 
-    $('#second-score').text(leaderboardData?.[1]?.scoreDetails?.totalScore ?? '')
-    $('#second-team').text(leaderboardData?.[1]?.name ?? '')
+    score = leaderboardData?.[1]?.scoreDetails?.totalScore;
+    result = score ? `${score} pts` : '';
+    $('#second-score').text(result)
+    team = leaderboardData?.[1]?.name;
+    $('#second-team').text(team)
 
-    $('#third-score').text(leaderboardData?.[2]?.scoreDetails?.totalScore ?? '')
-    $('#third-team').text(leaderboardData?.[2]?.name ?? '')
+    score = leaderboardData?.[2]?.scoreDetails?.totalScore;
+    result = score ? `${score} pts` : '';
+    $('#third-score').text(result);
+    team = leaderboardData?.[2]?.name;
+    $('#third-team').text(team)
 })
 
 

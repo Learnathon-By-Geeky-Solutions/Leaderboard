@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&display=swap');
+
+:root {
+  --primary-blue: #1890BA;
+  --primary-navy: #1B3765;
+  --primary-dark: #231F20;
+}
+
+body {
+  font-family: 'Barlow', sans-serif;
+}

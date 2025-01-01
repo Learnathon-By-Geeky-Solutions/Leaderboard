@@ -17,7 +17,7 @@ function App() {
           'https://sonarcloud.io/api/components/search_projects',
           {
             params: {
-              organization: 'studio-23-xyz',
+              organization: 'learnathon-by-geeky-solutions',
               ps: 100,
             },
           }
